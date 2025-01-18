@@ -36,13 +36,19 @@ st.set_page_config(page_title="Anàlisi de Parlant Amb...", layout="wide")
 st.title("📊 Dashboard d'Anàlisi de Parlant Amb...")
 
 # Configuració de la base de dades
-DB_CONFIG =  st.secrets["DB_CONFIG"]
+
+db_host = st.secrets["DB_HOST"]
+db_port = st.secrets["DB_PORT"]
+db_name =  st.secrets["DB_NAME"]
+db_user =  st.secrets["DB_USER"]
+db_password =  st.secrets["DB_PASSWORD"]
+
 
 # Connexió a la base de dades
 @st.cache_resource
 def get_database_connection():
     try:
-        return mysql.connector.connect(**DB_CONFIG)
+        return mysql.connector.connect(host=db_host, port=db_port, database=db_name, user=db_user, password=db_password)
     except mysql.connector.Error as err:
         st.error(f"Error de connexió a la base de dades: {err}")
         return None
